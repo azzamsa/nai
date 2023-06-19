@@ -1,0 +1,9 @@
+Config(
+    moments: [
+        // Brithday of Faramir
+        (
+            start_date: "1987-Dec-19",
+            format: "👶 Faramir age\nHe was born on {{ start_date }}. His age is {{ duration }}",
+        ),
+    ],
+)
