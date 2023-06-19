@@ -38,12 +38,6 @@ impl std::convert::From<std::env::VarError> for Error {
     }
 }
 
-impl std::convert::From<tera::Error> for Error {
-    fn from(err: tera::Error) -> Self {
-        Error::Internal(err.to_string())
-    }
-}
-
 impl std::convert::From<time::error::Format> for Error {
     fn from(err: time::error::Format) -> Self {
         Error::Internal(err.to_string())

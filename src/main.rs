@@ -8,8 +8,8 @@ use nai::{
     cli::Opts,
     config,
     exit_codes::ExitCode,
-    output::{stderr, Printer},
-    time::Time,
+    output::{stderr, stdout},
+    parser::parse,
 };
 
 fn main() {
@@ -36,10 +36,9 @@ fn run() -> miette::Result<ExitCode> {
     let config = config::load(&opts)?;
     tracing::debug!("Config: {:?}", config);
 
-    let printer = Printer::new();
     for moment in config.moments {
-        let time = Time::new(&moment.start_date)?;
-        printer.print(&time.date()?, &time.duration()?.to_string(), &moment.format)?;
+        let output = parse(&moment)?;
+        stdout(&output);
     }
 
     Ok(ExitCode::Success)

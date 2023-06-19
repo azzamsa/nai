@@ -1,0 +1,13 @@
+spec = {
+    WHITESPACE* ~
+    ( word+ | start_date+ | duration+ )+ ~
+    WHITESPACE*
+}
+
+start_date = { "{{" ~  WHITESPACE* ~ "start_date" ~ WHITESPACE* ~ "}}" }
+duration = { "{{" ~  WHITESPACE* ~ "duration" ~ WHITESPACE* ~ "}}" }
+
+word = { char+ }
+char = { ASCII_ALPHANUMERIC+ | "," | "." | "!" }
+
+WHITESPACE = { " " }

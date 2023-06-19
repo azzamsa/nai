@@ -1,9 +1,11 @@
-use std::fs;
-use std::path::{Path, PathBuf};
-
-use crate::cli::{Color, Opts};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 
 use serde::{Deserialize, Serialize};
+
+use crate::cli::{Color, Opts};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Config {
