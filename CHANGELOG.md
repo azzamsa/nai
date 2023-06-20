@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2023-06-20
+
+### Features
+
+- Support punctuation ([22416ed](22416edbbec93e7ab0dd87810fb5b793efd490f2))
+
+### Bug fixes
+
+- Unreachable input ([38ba0e0](38ba0e0f9419a01dda624fdee7c9a671f3a91763))
+
 ## [0.2.1] - 2023-06-20
 
 ### Bug fixes
