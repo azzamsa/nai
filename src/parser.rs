@@ -1,4 +1,5 @@
 use owo_colors::OwoColorize;
+use pest::iterators::Pairs;
 use pest::Parser;
 use pest_derive::Parser;
 
@@ -34,21 +35,7 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
                             output_.push_str(literal.as_str());
                         }
                         Rule::style => {
-                            for style in literal.into_inner() {
-                                match style.as_rule() {
-                                    Rule::color => {
-                                        output_ = format!("{}", output_.blue());
-                                    }
-                                    Rule::WHITESPACE => (),
-                                    _ => {
-                                        tracing::debug!(
-                                            "unreachable literal's style: {:?}",
-                                            &style
-                                        );
-                                        unreachable!();
-                                    }
-                                }
-                            }
+                            parse_style(literal.into_inner(), &mut output_);
                         }
                         Rule::WHITESPACE => (),
                         _ => {
@@ -61,46 +48,7 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
             }
             Rule::variable => {
                 let mut output_ = String::new();
-                for variable in piece.into_inner() {
-                    match variable.as_rule() {
-                        Rule::variable_name => match variable.as_str() {
-                            "start_date" => {
-                                output_.push_str(&time.date()?.to_string());
-                            }
-                            "duration" => {
-                                output_.push_str(&time.duration()?.to_string());
-                            }
-                            _ => {
-                                return Err(crate::Error::InvalidBuiltInVariable {
-                                    variable: variable.as_str().to_string(),
-                                })
-                            }
-                        },
-                        Rule::style => {
-                            for style in variable.into_inner() {
-                                match style.as_rule() {
-                                    Rule::color => {
-                                        output_ = format!("{}", output_.blue());
-                                    }
-                                    Rule::WHITESPACE => (),
-                                    _ => {
-                                        tracing::debug!(
-                                            "unreachable variable's style: {:?}",
-                                            &style
-                                        );
-                                        unreachable!();
-                                    }
-                                }
-                            }
-                        }
-
-                        Rule::WHITESPACE => (),
-                        _ => {
-                            tracing::debug!("unreachable `variable` {:?}", &variable);
-                            unreachable!();
-                        }
-                    }
-                }
+                parse_variables(piece.into_inner(), &mut output_, &time)?;
                 output.push_str(&output_);
             }
             Rule::EOI => (),
@@ -112,6 +60,55 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
     }
     tracing::debug!("{:#?}", &output);
     Ok(output)
+}
+
+fn parse_variables(
+    variables: Pairs<'_, Rule>,
+    output: &mut String,
+    time: &Time,
+) -> Result<(), crate::Error> {
+    for variable in variables {
+        match variable.as_rule() {
+            Rule::variable_name => match variable.as_str() {
+                "start_date" => {
+                    output.push_str(&time.date()?.to_string());
+                }
+                "duration" => {
+                    output.push_str(&time.duration()?.to_string());
+                }
+                _ => {
+                    return Err(crate::Error::InvalidBuiltInVariable {
+                        variable: variable.as_str().to_string(),
+                    })
+                }
+            },
+            Rule::style => {
+                parse_style(variable.into_inner(), output);
+            }
+            Rule::WHITESPACE => (),
+            _ => {
+                tracing::debug!("unreachable `variable` {:?}", &variable);
+                unreachable!();
+            }
+        }
+    }
+
+    Ok(())
+}
+
+fn parse_style(styles: Pairs<'_, Rule>, output: &mut String) {
+    for style in styles {
+        match style.as_rule() {
+            Rule::color => {
+                *output = format!("{}", output.blue());
+            }
+            Rule::WHITESPACE => (),
+            _ => {
+                tracing::debug!("unreachable literal's style: {:?}", &style);
+                unreachable!();
+            }
+        }
+    }
 }
 
 #[cfg(test)]
