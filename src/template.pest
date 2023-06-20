@@ -1,22 +1,18 @@
 spec = {
-    SOI ~
-    WHITESPACE* ~
-    ( word | variable | literal )* ~
-    WHITESPACE* ~
-    EOI
+    SOI ~ WHITESPACE* ~ (word | variable | literal)* ~ WHITESPACE* ~ EOI
 }
 
-variable = { expr_open ~ variable_name ~ style*  ~ expr_close }
-literal = { expr_open ~ "'" ~ word ~ "'" ~ style* ~ expr_close }
+variable = { expr_open ~ variable_name ~ style* ~ expr_close }
+literal  = { expr_open ~ "'" ~ word ~ "'" ~ style* ~ expr_close }
 
-style = { WHITESPACE* ~ "|" ~ WHITESPACE* ~ color }
-color = { "red" | "yellow" | "blue" }
-expr_open = _{ "{{" ~  WHITESPACE* }
-expr_close = _{ WHITESPACE* ~ "}}" }
-variable_name = { ASCII_ALPHA ~ ( ASCII_ALPHANUMERIC | "_" )* }
+style         =  { WHITESPACE* ~ "|" ~ WHITESPACE* ~ color }
+color         =  { "black" | "red" | "green" | "yellow" | "blue" | "magenta" | "cyan" | "white" | "default" | "brightblack" | "brightred" | "brightgreen" | "brightyellow" | "brightblue" | "brightmagenta" | "brightcyan" | "brightwhite" }
+expr_open     = _{ "{{" ~ WHITESPACE* }
+expr_close    = _{ WHITESPACE* ~ "}}" }
+variable_name =  { ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "_")* }
 
-word = { char+ }
-char = _{ ASCII_ALPHANUMERIC+ | custom_punctuation+ | NEWLINE | "," | "."}
+word =  { char+ }
+char = _{ ASCII_ALPHANUMERIC+ | custom_punctuation+ | NEWLINE | "," | "." }
 
 custom_punctuation = { PUNCTUATION ~ !("{" | "}" | "|") }
-WHITESPACE = { " " }
+WHITESPACE         = { " " }

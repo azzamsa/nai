@@ -15,7 +15,7 @@ setup:
 
 # Setup the development tools.
 _setup-dev:
-    cargo install --locked cargo-nextest git-cliff cargo-watch dprint cargo-edit cargo-outdated spacer
+    cargo install --locked cargo-nextest git-cliff cargo-watch dprint pest_fmt cargo-edit cargo-outdated spacer
 
 # Develop the app.
 dev:
@@ -24,6 +24,7 @@ dev:
 # Format the codebase.
 fmt:
     cargo fmt --all
+    pestfmt .
     dprint fmt --config configs/dprint.json
 
 # Check is the codebase properly formatted.
