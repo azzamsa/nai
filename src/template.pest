@@ -7,16 +7,16 @@ spec = {
 }
 
 variable = { expr_open ~ variable_name ~ expr_close }
-literal = { literal_open ~ word ~ literal_close }
+literal = { expr_open ~ "'" ~ word ~ "'" ~ style* ~ expr_close }
 
+style = { WHITESPACE* ~ "|" ~ WHITESPACE* ~ color }
+color = { "red" | "yellow" | "blue" }
 expr_open = _{ "{{" ~  WHITESPACE* }
 expr_close = _{ WHITESPACE* ~ "}}" }
-literal_open = _{ "{{" ~  WHITESPACE* ~ "'" }
-literal_close = _{ "'" ~ WHITESPACE* ~ "}}" }
 variable_name = { ASCII_ALPHA ~ ( ASCII_ALPHANUMERIC | "_" )* }
 
 word = { char+ }
-char = _{ ASCII_ALPHANUMERIC+ | custom_punctuation+ | NEWLINE | "," | "." }
+char = _{ ASCII_ALPHANUMERIC+ | custom_punctuation+ | NEWLINE | "," | "."}
 
-custom_punctuation = { PUNCTUATION ~ !("{" | "}") }
+custom_punctuation = { PUNCTUATION ~ !("{" | "}" | "|") }
 WHITESPACE = { " " }

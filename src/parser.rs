@@ -1,3 +1,4 @@
+use owo_colors::OwoColorize;
 use pest::Parser;
 use pest_derive::Parser;
 
@@ -26,18 +27,34 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
                 output.push_str(piece.as_str());
             }
             Rule::literal => {
+                let mut output_ = String::new();
                 for literal in piece.into_inner() {
                     match literal.as_rule() {
                         Rule::word => {
-                            output.push_str(literal.as_str());
+                            output_.push_str(literal.as_str());
+                        }
+                        Rule::style => {
+                            for style in literal.into_inner() {
+                                match style.as_rule() {
+                                    Rule::color => {
+                                        output_ = format!("{}", output_.blue());
+                                    }
+                                    Rule::WHITESPACE => (),
+                                    _ => {
+                                        tracing::debug!("unreachable `style` {:?}", &style);
+                                        unreachable!();
+                                    }
+                                }
+                            }
                         }
                         Rule::WHITESPACE => (),
                         _ => {
-                            tracing::debug!("unreachable `variable` {:?}", &literal);
+                            tracing::debug!("unreachable `literal` {:?}", &literal);
                             unreachable!();
                         }
                     }
                 }
+                output.push_str(&output_);
             }
             Rule::variable => {
                 for variable in piece.into_inner() {
@@ -136,6 +153,13 @@ mod tests {
     #[test]
     fn literal() -> Result<(), crate::Error> {
         let moment = test_case("{{ 'Faramir' }} was born on {{ start_date }}");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
+    #[test]
+    fn style() -> Result<(), crate::Error> {
+        let moment = test_case("{{ 'Faramir' | blue }} was born on {{ start_date }}");
         let result = parse(&moment);
         assert!(result.is_ok());
         Ok(())

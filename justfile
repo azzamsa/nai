@@ -4,6 +4,7 @@ shebang := if os() == 'windows' { 'powershell.exe' } else { '/usr/bin/sh' }
 
 alias d := dev
 alias t := test
+alias _t := _unit-test
 
 # List available commands.
 _default:
