@@ -32,6 +32,14 @@ pub enum Error {
         help("See the configuration in example directory.")
     )]
     InvalidSyntax { message: String },
+
+    #[error("Invalid built-in variable: {variable}")]
+    #[diagnostic(
+        code(nai::invalid_built_in_variable),
+        url(docsrs),
+        help("No such built-in variable.")
+    )]
+    InvalidBuiltInVariable { variable: String },
 }
 
 impl std::convert::From<std::io::Error> for Error {

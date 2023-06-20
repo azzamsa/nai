@@ -22,11 +22,29 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
 
     for piece in pair.into_inner() {
         match piece.as_rule() {
-            Rule::start_date => {
-                output.push_str(&time.date()?.to_string());
-            }
-            Rule::duration => {
-                output.push_str(&time.duration()?.to_string());
+            Rule::variable => {
+                for variable in piece.into_inner() {
+                    match variable.as_rule() {
+                        Rule::variable_name => match variable.as_str() {
+                            "start_date" => {
+                                output.push_str(&time.date()?.to_string());
+                            }
+                            "duration" => {
+                                output.push_str(&time.duration()?.to_string());
+                            }
+                            _ => {
+                                return Err(crate::Error::InvalidBuiltInVariable {
+                                    variable: variable.as_str().to_string(),
+                                })
+                            }
+                        },
+                        Rule::WHITESPACE => (),
+                        _ => {
+                            // tracing::debug!("unreachable {:?}", &variable);
+                            unreachable!();
+                        }
+                    }
+                }
             }
             Rule::word | Rule::WHITESPACE => {
                 output.push_str(piece.as_str());

@@ -1,13 +1,16 @@
 spec = {
     SOI ~
     WHITESPACE* ~
-    ( word+ | start_date+ | duration+ )+ ~
+    ( word | variable )* ~
     WHITESPACE* ~
     EOI
 }
 
-start_date = { "{{" ~  WHITESPACE* ~ "start_date" ~ WHITESPACE* ~ "}}" }
-duration = { "{{" ~  WHITESPACE* ~ "duration" ~ WHITESPACE* ~ "}}" }
+variable = { "{{" ~  WHITESPACE* ~ variable_name ~ WHITESPACE* ~ "}}" }
+// variable_name = { ASCII_ALPHA+ ~  "_"* ~ ASCII_ALPHANUMERIC * }
+variable_name = { ASCII_ALPHA ~ ( ASCII_ALPHANUMERIC | "_" )* }
+
+literal = { "{{" ~  WHITESPACE* ~ "'" ~ word ~ "''" ~ WHITESPACE* ~ "}}" }
 
 word = { char+ }
 char = { ASCII_ALPHANUMERIC+ | custom_punctuation+ | "," | "." }
