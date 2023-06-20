@@ -5,9 +5,12 @@ on:
     tags:
       - 'v*'
 
+env:
+  BIN_NAME: nai
+
 jobs:
   publish:
-    name: Publish for ${{ matrix.build }}
+    name: Publish
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -48,6 +51,27 @@ jobs:
       - name: Build
         run: cargo build --release --locked --target ${{ matrix.target }}
 
+      - name: Build archive
+        shell: bash
+        run: |
+          outdir="./target/${{ env.TARGET_DIR }}/release"
+          staging="${{ env.BIN_NAME }}-${{ env.RELEASE_VERSION }}-${{ matrix.target }}"
+
+          mkdir -p "$staging"/{complete,doc}
+          cp {README.md,LICENSE-*} "$staging/"
+          cp {CHANGELOG.md,docs/*} "$staging/doc/"
+
+          if [ "${{ matrix.os }}" = "windows-2019" ]; then
+            cp "target/${{ matrix.target }}/release/${{ env.BIN_NAME }}.exe" "$staging/"
+            cd "$staging"
+            7z a "../$staging.zip" .
+            echo "ASSET=$staging.zip" >> $GITHUB_ENV
+          else
+            cp "target/${{ matrix.target }}/release/${{ env.BIN_NAME }}" "$staging/"
+            tar czf "$staging.tar.gz" -C "$staging" .
+            echo "ASSET=$staging.tar.gz" >> $GITHUB_ENV
+          fi
+
       - name: Prepare release assets
         shell: bash
         run: |
@@ -71,9 +95,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: "v${{ env.RELEASE_VERSION }}"
-          files: |
-            *.tar.gz
-            *.zip
+          files: ${{ env.ASSET }}
           prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') }}
           generate_release_notes: true
           body_path: CHANGES.md

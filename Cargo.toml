@@ -50,4 +50,5 @@ bin-dir = "{ bin }{ binary-ext }"
 pkg-fmt = "tgz"
 
 [package.metadata.release]
-pre-release-hook = ["git-cliff", "--tag", "{{version}}", "--config", "configs/cliff.toml", "--output", "CHANGELOG.md"]
+tag-message = "{{version}}"
+pre-release-hook = ["just", "_prepare-release", "{{version}}"]

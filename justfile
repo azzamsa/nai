@@ -53,9 +53,13 @@ check: fmt-check lint test
 doc:
     cargo doc --open
 
-# Create a new release. Example `just release v2.2.0`
-release version:
-    bash scripts/release.sh {{ version }}
+# Create a new release. Example `cargo-release release minor --tag-name v0.2.0`
+release level tag:
+    cargo-release release {{ level }} --tag-name {{ tag }}
+
+_prepare-release version:
+    git-cliff --config configs/cliff.toml --output CHANGELOG.md --tag {{ version }}
+    just fmt
 
 # Check dependencies health. Pass `--write` to uppgrade dependencies.
 [unix]
