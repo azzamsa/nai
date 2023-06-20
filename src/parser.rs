@@ -78,10 +78,12 @@ mod tests {
         Ok(())
     }
     #[test]
-    fn no_whitespace_variabler() -> Result<(), crate::Error> {
-        let moment = test_case("He was born on {{start_date}}.");
+    fn punctuation_and_special_characters() -> Result<(), crate::Error> {
+        let moment = test_case(
+            "Faramir's child was born on {{ start_date }}, his favorite quote is: 'Not - all those who wander are lost!?.'"
+        );
         let result = parse(&moment)?;
-        let expected = "He was born on Sat, 19 Dec 1987.";
+        let expected = "Faramir's child was born on Sat, 19 Dec 1987, his favorite quote is: 'Not - all those who wander are lost!?.'";
         assert_eq!(result, expected);
         Ok(())
     }

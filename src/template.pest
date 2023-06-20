@@ -10,6 +10,7 @@ start_date = { "{{" ~  WHITESPACE* ~ "start_date" ~ WHITESPACE* ~ "}}" }
 duration = { "{{" ~  WHITESPACE* ~ "duration" ~ WHITESPACE* ~ "}}" }
 
 word = { char+ }
-char = { ASCII_ALPHANUMERIC+ | "," | "." | "!" }
+char = { ASCII_ALPHANUMERIC+ | custom_punctuation+ | "," | "." }
 
+custom_punctuation = { PUNCTUATION ~ !("{" | "}") }
 WHITESPACE = { " " }
