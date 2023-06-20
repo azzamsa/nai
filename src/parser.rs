@@ -80,6 +80,13 @@ mod tests {
         Ok(())
     }
     #[test]
+    fn built_in_variables() -> Result<(), crate::Error> {
+        let moment = test_case("He was born on {{ start_date }}. His age is {{ duration }}");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
+    #[test]
     fn leading_and_trailing_whitespace() -> Result<(), crate::Error> {
         let moment = test_case(" He was born on {{ start_date }}. ");
         let result = parse(&moment)?;
