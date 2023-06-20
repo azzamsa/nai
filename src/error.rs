@@ -11,15 +11,15 @@ pub enum Error {
 
     #[error("Configuration file is not found in `{path}`.")]
     #[diagnostic(
-        code(gelatyx::no_config),
+        code(nai::no_config),
         url(docsrs),
-        help("Try creating a config of your choosen formatter.")
+        help("Make sure the file is exists.")
     )]
     ConfigNotFound { path: PathBuf },
 
     #[error("Invalid configuration: {message}")]
     #[diagnostic(
-        code(gelatyx::invalid_config),
+        code(nai::invalid_config),
         url(docsrs),
         help("See the configuration example of your choosen formatter.")
     )]
