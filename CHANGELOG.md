@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - 2023-06-20
+
+### Features
+
+- Support all `owo-colors` ([0b6c766](0b6c766d87f2f19e96b149b7285ef76c276e1424))
+
 ## [0.5.0] - 2023-06-20
 
 ### Features
