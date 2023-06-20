@@ -7,7 +7,6 @@ spec = {
 }
 
 variable = { "{{" ~  WHITESPACE* ~ variable_name ~ WHITESPACE* ~ "}}" }
-// variable_name = { ASCII_ALPHA+ ~  "_"* ~ ASCII_ALPHANUMERIC * }
 variable_name = { ASCII_ALPHA ~ ( ASCII_ALPHANUMERIC | "_" )* }
 
 literal = { "{{" ~  WHITESPACE* ~ "'" ~ word ~ "''" ~ WHITESPACE* ~ "}}" }
