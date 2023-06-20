@@ -1,4 +1,4 @@
-use owo_colors::{AnsiColors, OwoColorize};
+use owo_colors::{AnsiColors, Effect, OwoColorize, Style};
 use pest::iterators::Pairs;
 use pest::Parser;
 use pest_derive::Parser;
@@ -102,6 +102,10 @@ fn parse_style(styles: Pairs<'_, Rule>, output: &mut String) {
             Rule::color => {
                 *output = format!("{}", output.color(AnsiColors::from(style.as_str())));
             }
+            Rule::effect => {
+                let style = Style::new().effect(Effect::Underline);
+                *output = format!("{}", output.style(style));
+            }
             Rule::WHITESPACE => (),
             _ => {
                 tracing::debug!("unreachable literal's style: {:?}", &style);
@@ -185,8 +189,15 @@ mod tests {
         Ok(())
     }
     #[test]
-    fn style_in_variale() -> Result<(), crate::Error> {
+    fn style_in_variable() -> Result<(), crate::Error> {
         let moment = test_case("{{ 'Faramir' | blue }} was born on {{ start_date | red }}");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
+    #[test]
+    fn effect_in_literal() -> Result<(), crate::Error> {
+        let moment = test_case("{{ 'Faramir' | underline }} was born on {{ start_date }}");
         let result = parse(&moment);
         assert!(result.is_ok());
         Ok(())

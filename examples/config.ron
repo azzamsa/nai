@@ -3,7 +3,7 @@ Config(
         (
             start_date: "1987-Dec-19",
             // format: "{{ 'Faramir' }} was born on {{ start_date }}. His age is {{ duration }}",
-            format: "{{ 'Faramir' | blue }} was born on {{ start_date | red }}. His age is {{ duration }}",
+            format: "{{ 'Faramir' | blue }} was born on {{ start_date | red }}. His age is {{ duration }}. {{ 'Bye' | underline }}!",
         ),
     ],
 )
