@@ -77,7 +77,7 @@ jobs:
         id: git-cliff
         with:
           config: cliff.toml
-          args: -vv --tage ${{ env.RELEASE_VERSION }} --strip header
+          args: -vv --tag ${{ env.RELEASE_VERSION }} --strip header
         env:
           OUTPUT: CHANGES.md
 
