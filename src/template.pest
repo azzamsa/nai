@@ -1,9 +1,9 @@
-spec = { SOI ~ format ~ EOI }
-
-format = {
+spec = {
+    SOI ~
     WHITESPACE* ~
     ( word+ | start_date+ | duration+ )+ ~
-    WHITESPACE*
+    WHITESPACE* ~
+    EOI
 }
 
 start_date = { "{{" ~  WHITESPACE* ~ "start_date" ~ WHITESPACE* ~ "}}" }

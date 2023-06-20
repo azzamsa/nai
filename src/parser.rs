@@ -31,7 +31,11 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
             Rule::word | Rule::WHITESPACE => {
                 output.push_str(piece.as_str());
             }
-            _ => unreachable!(),
+            Rule::EOI => (),
+            _ => {
+                // tracing::debug!("unreachable {:?}", &piece);
+                unreachable!();
+            }
         }
     }
     tracing::debug!("{:#?}", &output);
