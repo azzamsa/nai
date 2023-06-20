@@ -57,8 +57,8 @@ doc:
     cargo doc --open
 
 # Create a new release. Example `cargo-release release minor --tag-name v0.2.0`
-release level tag:
-    cargo-release release {{ level }} --tag-name {{ tag }}
+release level:
+    cargo-release release {{ level }}
 
 _prepare-release version:
     git-cliff --config configs/cliff.toml --output CHANGELOG.md --tag {{ version }}
