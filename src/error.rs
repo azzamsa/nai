@@ -21,9 +21,17 @@ pub enum Error {
     #[diagnostic(
         code(nai::invalid_config),
         url(docsrs),
-        help("See the configuration example of your choosen formatter.")
+        help("See the configuration in example directory.")
     )]
     InvalidConfig { message: String },
+
+    #[error("Invalid syntax: {message}")]
+    #[diagnostic(
+        code(nai::invalid_syntax),
+        url(docsrs),
+        help("See the configuration in example directory.")
+    )]
+    InvalidSyntax { message: String },
 }
 
 impl std::convert::From<std::io::Error> for Error {
@@ -64,12 +72,6 @@ impl std::convert::From<time::error::Parse> for Error {
 
 impl std::convert::From<humantime::DurationError> for Error {
     fn from(err: humantime::DurationError) -> Self {
-        Error::Internal(err.to_string())
-    }
-}
-
-impl std::convert::From<pest::error::Error<crate::parser::Rule>> for Error {
-    fn from(err: pest::error::Error<crate::parser::Rule>) -> Self {
         Error::Internal(err.to_string())
     }
 }
