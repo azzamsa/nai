@@ -1,7 +1,5 @@
 #!/usr/bin/env -S just --justfile
 
-shebang := if os() == 'windows' { 'powershell.exe' } else { '/usr/bin/sh' }
-
 alias d := dev
 alias t := test
 alias _t := _unit-test
@@ -58,9 +56,12 @@ check: fmt-check lint test
 doc:
     cargo doc --open
 
+release-check level:
+    cargo-release release {{ level }}
+
 # Create a new release. Example `cargo-release release minor --tag-name v0.2.0`
 release level:
-    cargo-release release {{ level }}
+    cargo-release release {{ level }} --execute
 
 _prepare-release version:
     git-cliff --config configs/cliff.toml --output CHANGELOG.md --tag {{ version }}
