@@ -1,4 +1,6 @@
-spec = {
+spec = { SOI ~ format ~ EOI }
+
+format = {
     WHITESPACE* ~
     ( word+ | start_date+ | duration+ )+ ~
     WHITESPACE*
