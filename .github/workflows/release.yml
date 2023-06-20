@@ -58,12 +58,23 @@ jobs:
         run: |
           ./scripts/compress-assets.sh ${{ matrix.os }} ${{ matrix.target }} ${{ env.RELEASE_VERSION }}
 
-      - name: Upload the release
-        uses: svenstaro/upload-release-action@v2
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v2
+        id: git-cliff
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: nai-${{ env.RELEASE_VERSION }}-${{ matrix.target }}*
-          file_glob: true
-          overwrite: true
-          tag: ${{ github.ref }}
-          release_name: "v${{ env.RELEASE_VERSION }}"
+          config: cliff.toml
+          args: -vv --tage ${{ env.RELEASE_VERSION }} --strip header
+        env:
+          OUTPUT: CHANGES.md
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "v${{ env.RELEASE_VERSION }}"
+          files: |
+            *.tar.gz
+            *.zip
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') }}
+          generate_release_notes: true
+          body_path: CHANGES.md
+          token: ${{ secrets.H_TOKEN }}
