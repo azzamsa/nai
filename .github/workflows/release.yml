@@ -9,6 +9,38 @@ env:
   BIN_NAME: nai
 
 jobs:
+  create-github-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-22.04
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set the release version
+        shell: bash
+        run: |
+          echo "RELEASE_VERSION=${GITHUB_REF:11}" >> $GITHUB_ENV
+          echo ${{ env.RELEASE_VERSION }}
+
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v2
+        id: git-cliff
+        with:
+          config: cliff.toml
+          args: -vv --tag ${{ env.RELEASE_VERSION }} --strip header
+        env:
+          OUTPUT: CHANGES.md
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "v${{ env.RELEASE_VERSION }}"
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') }}
+          generate_release_notes: true
+          body_path: CHANGES.md
+          token: ${{ secrets.GH_TOKEN }}
+
   publish:
     name: Publish
     runs-on: ${{ matrix.os }}
@@ -29,11 +61,8 @@ jobs:
 
       - name: Set the release version
         shell: bash
-        run: echo "RELEASE_VERSION=${GITHUB_REF:11}" >> $GITHUB_ENV
-
-      - name: Show release version
-        shell: bash
         run: |
+          echo "RELEASE_VERSION=${GITHUB_REF:11}" >> $GITHUB_ENV
           echo ${{ env.RELEASE_VERSION }}
 
       - name: Install musl-tools
@@ -72,21 +101,11 @@ jobs:
             echo "ASSET=$staging.tar.gz" >> $GITHUB_ENV
           fi
 
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: git-cliff
-
-      - name: Generate a changelog
-        shell: bash
-        run:
-          git-cliff --config configs/cliff.toml --output CHANGES.md --tag ${{ env.RELEASE_VERSION }} --strip header -vv
-
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           name: "v${{ env.RELEASE_VERSION }}"
           files: ${{ env.ASSET }}
           prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') }}
-          generate_release_notes: true
-          body_path: CHANGES.md
+          generate_release_notes: false
           token: ${{ secrets.GH_TOKEN }}
