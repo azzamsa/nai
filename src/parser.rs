@@ -18,10 +18,27 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
         })?
         .next()
         .unwrap();
-    tracing::debug!("{:#?}", &pair);
+    tracing::trace!("{:#?}", &pair);
 
     for piece in pair.into_inner() {
         match piece.as_rule() {
+            Rule::word | Rule::WHITESPACE => {
+                output.push_str(piece.as_str());
+            }
+            Rule::literal => {
+                for literal in piece.into_inner() {
+                    match literal.as_rule() {
+                        Rule::word => {
+                            output.push_str(literal.as_str());
+                        }
+                        Rule::WHITESPACE => (),
+                        _ => {
+                            tracing::debug!("unreachable `variable` {:?}", &literal);
+                            unreachable!();
+                        }
+                    }
+                }
+            }
             Rule::variable => {
                 for variable in piece.into_inner() {
                     match variable.as_rule() {
@@ -40,18 +57,15 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
                         },
                         Rule::WHITESPACE => (),
                         _ => {
-                            // tracing::debug!("unreachable {:?}", &variable);
+                            tracing::debug!("unreachable `variable` {:?}", &variable);
                             unreachable!();
                         }
                     }
                 }
             }
-            Rule::word | Rule::WHITESPACE => {
-                output.push_str(piece.as_str());
-            }
             Rule::EOI => (),
             _ => {
-                // tracing::debug!("unreachable {:?}", &piece);
+                tracing::debug!("unreachable `piece` {:?}", &piece);
                 unreachable!();
             }
         }
@@ -115,6 +129,13 @@ mod tests {
     #[test]
     fn newline() -> Result<(), crate::Error> {
         let moment = test_case("Faramir age.\nHe was born on {{ start_date }}.\nThanks god.");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
+    #[test]
+    fn literal() -> Result<(), crate::Error> {
+        let moment = test_case("{{ 'Faramir' }} was born on {{ start_date }}");
         let result = parse(&moment);
         assert!(result.is_ok());
         Ok(())

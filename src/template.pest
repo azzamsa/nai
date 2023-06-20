@@ -1,18 +1,22 @@
 spec = {
     SOI ~
     WHITESPACE* ~
-    ( word | variable )* ~
+    ( word | variable | literal )* ~
     WHITESPACE* ~
     EOI
 }
 
-variable = { "{{" ~  WHITESPACE* ~ variable_name ~ WHITESPACE* ~ "}}" }
+variable = { expr_open ~ variable_name ~ expr_close }
+literal = { literal_open ~ word ~ literal_close }
+
+expr_open = _{ "{{" ~  WHITESPACE* }
+expr_close = _{ WHITESPACE* ~ "}}" }
+literal_open = _{ "{{" ~  WHITESPACE* ~ "'" }
+literal_close = _{ "'" ~ WHITESPACE* ~ "}}" }
 variable_name = { ASCII_ALPHA ~ ( ASCII_ALPHANUMERIC | "_" )* }
 
-literal = { "{{" ~  WHITESPACE* ~ "'" ~ word ~ "''" ~ WHITESPACE* ~ "}}" }
-
 word = { char+ }
-char = { ASCII_ALPHANUMERIC+ | custom_punctuation+ | NEWLINE | "," | "." }
+char = _{ ASCII_ALPHANUMERIC+ | custom_punctuation+ | NEWLINE | "," | "." }
 
 custom_punctuation = { PUNCTUATION ~ !("{" | "}") }
 WHITESPACE = { " " }
