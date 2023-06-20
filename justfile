@@ -38,6 +38,7 @@ _lint_doc:
 lint:
     cargo clippy
 
+# Test unit tests only
 _unit-test:
     cargo nextest run --lib
 
@@ -56,13 +57,16 @@ check: fmt-check lint test
 doc:
     cargo doc --open
 
-release-check level:
-    cargo-release release {{ level }}
-
 # Create a new release. Example `cargo-release release minor --tag-name v0.2.0`
 release level:
+    just up
     cargo-release release {{ level }} --execute
 
+# Make sure the repo is ready for release
+_release-check level:
+    cargo-release release {{ level }}
+
+# Release hooks
 _prepare-release version:
     git-cliff --config configs/cliff.toml --output CHANGELOG.md --tag {{ version }}
     just fmt
