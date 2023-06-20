@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Nai</h1>
+  <h1>Nai (나이)</h1>
 
 <img src='docs/time.svg' width=80px />
 
