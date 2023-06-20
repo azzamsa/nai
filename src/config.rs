@@ -22,7 +22,12 @@ pub struct Moment {
 pub fn load(opts: &Opts) -> Result<Config, crate::Error> {
     set_color(opts);
 
-    let config_path = &path()?;
+    let default_path = &default_path()?;
+    let config_path = match &opts.config {
+        Some(path) => path,
+        None => default_path,
+    };
+
     let file_content =
         fs::read_to_string(config_path).map_err(|_| crate::Error::ConfigNotFound {
             path: config_path.to_path_buf(),
@@ -52,7 +57,7 @@ fn set_color(opts: &Opts) {
 }
 
 /// Return configuration path
-fn path() -> Result<PathBuf, crate::Error> {
+fn default_path() -> Result<PathBuf, crate::Error> {
     let path = if cfg!(windows) {
         Path::new(&std::env::var("APPDATA")?)
             .join("Nai")
