@@ -72,16 +72,6 @@ jobs:
             echo "ASSET=$staging.tar.gz" >> $GITHUB_ENV
           fi
 
-      - name: Prepare release assets
-        shell: bash
-        run: |
-          ./scripts/prepare-assets.sh ${{ matrix.os }} ${{ matrix.target }} ${{ env.RELEASE_VERSION }}
-
-      - name: Create release artifacts
-        shell: bash
-        run: |
-          ./scripts/compress-assets.sh ${{ matrix.os }} ${{ matrix.target }} ${{ env.RELEASE_VERSION }}
-
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v2
         id: git-cliff
