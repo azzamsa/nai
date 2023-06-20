@@ -67,3 +67,9 @@ impl std::convert::From<humantime::DurationError> for Error {
         Error::Internal(err.to_string())
     }
 }
+
+impl std::convert::From<pest::error::Error<crate::parser::Rule>> for Error {
+    fn from(err: pest::error::Error<crate::parser::Rule>) -> Self {
+        Error::Internal(err.to_string())
+    }
+}

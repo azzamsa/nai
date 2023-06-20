@@ -12,10 +12,8 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
     let mut output = String::new();
     let time = Time::new(&moment.start_date)?;
 
-    let pair = TemplateParser::parse(Rule::spec, &moment.format)
-        .unwrap()
-        .next()
-        .unwrap();
+    let pair = TemplateParser::parse(Rule::spec, &moment.format)?
+        .next().unwrap();
     tracing::debug!("{:#?}", &pair);
 
     for piece in pair.into_inner() {
