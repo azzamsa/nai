@@ -51,4 +51,5 @@ pkg-fmt = "tgz"
 
 [package.metadata.release]
 tag-message = "{{version}}"
+pre-release-commit-message = "{{version}}"
 pre-release-hook = ["just", "_prepare-release", "{{version}}"]
