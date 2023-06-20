@@ -21,11 +21,9 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
     for piece in pair.into_inner() {
         match piece.as_rule() {
             Rule::start_date => {
-                dbg!(&piece);
                 output.push_str(&time.date()?.to_string());
             }
             Rule::duration => {
-                dbg!(&piece);
                 output.push_str(&time.duration()?.to_string());
             }
             Rule::word | Rule::WHITESPACE => {
