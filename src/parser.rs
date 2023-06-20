@@ -1,4 +1,4 @@
-use owo_colors::OwoColorize;
+use owo_colors::{AnsiColors, OwoColorize};
 use pest::iterators::Pairs;
 use pest::Parser;
 use pest_derive::Parser;
@@ -100,7 +100,7 @@ fn parse_style(styles: Pairs<'_, Rule>, output: &mut String) {
     for style in styles {
         match style.as_rule() {
             Rule::color => {
-                *output = format!("{}", output.blue());
+                *output = format!("{}", output.color(AnsiColors::from(style.as_str())));
             }
             Rule::WHITESPACE => (),
             _ => {
