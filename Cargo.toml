@@ -1,6 +1,6 @@
 [package]
 name = "nai"
-version = "0.6.0"
+version = "0.7.0"
 authors = ["azzamsa <vcs@azzamsa.com>"]
 categories = ["command-line-utilities"]
 edition = "2021"

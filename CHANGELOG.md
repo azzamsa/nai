@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.0] - 2023-06-20
+
+### Features
+
+- Support all `owo` effects ([4d0fc98](4d0fc983d367533d08ee0d143f26b18c9091902b))
+
 ## [0.6.0] - 2023-06-20
 
 ### Features
