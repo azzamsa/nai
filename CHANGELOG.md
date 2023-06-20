@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2023-06-20
+
+### Features
+
+- Support newline ([b86d9a7](b86d9a7f95ccb12111416571df104c0189990cbb))
+
+### Bug fixes
+
+- Migrate to `chrono` ([9b0ddd0](9b0ddd0321c9f7c59df65d9d0bd5dfaa3b35eb08))
+
 ## [0.3.0] - 2023-06-20
 
 ### Features
