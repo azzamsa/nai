@@ -38,8 +38,11 @@ _lint_doc:
 lint:
     cargo clippy
 
+_unit-test:
+    cargo test --lib
+
 # Test the codebase.
-test:
+test: _unit-test
     cargo test --doc
     cargo test
 

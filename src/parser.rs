@@ -41,3 +41,48 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
     tracing::debug!("{:#?}", &output);
     Ok(output)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn test_case(format: &str) -> Moment {
+        Moment {
+            start_date: "1987-Dec-19".to_string(),
+            format: format.to_string(),
+        }
+    }
+
+    #[test]
+    fn simple() -> Result<(), crate::Error> {
+        let moment = test_case("He was born on {{ start_date }}.");
+        let result = parse(&moment)?;
+        let expected = "He was born on Sat, 19 Dec 1987.";
+        assert_eq!(result, expected);
+        Ok(())
+    }
+    #[test]
+    fn leading_and_trailing_whitespace() -> Result<(), crate::Error> {
+        let moment = test_case(" He was born on {{ start_date }}. ");
+        let result = parse(&moment)?;
+        let expected = " He was born on Sat, 19 Dec 1987. ";
+        assert_eq!(result, expected);
+        Ok(())
+    }
+    #[test]
+    fn no_whitespace_variable() -> Result<(), crate::Error> {
+        let moment = test_case("He was born on {{start_date}}.");
+        let result = parse(&moment)?;
+        let expected = "He was born on Sat, 19 Dec 1987.";
+        assert_eq!(result, expected);
+        Ok(())
+    }
+    #[test]
+    fn no_whitespace_variabler() -> Result<(), crate::Error> {
+        let moment = test_case("He was born on {{start_date}}.");
+        let result = parse(&moment)?;
+        let expected = "He was born on Sat, 19 Dec 1987.";
+        assert_eq!(result, expected);
+        Ok(())
+    }
+}
