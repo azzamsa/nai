@@ -72,14 +72,14 @@ jobs:
             echo "ASSET=$staging.tar.gz" >> $GITHUB_ENV
           fi
 
-      - name: Generate a changelog
-        uses: orhun/git-cliff-action@v2
-        id: git-cliff
+      - uses: taiki-e/install-action@v2
         with:
-          config: cliff.toml
-          args: -vv --tag ${{ env.RELEASE_VERSION }} --strip header
-        env:
-          OUTPUT: CHANGES.md
+          tool: git-cliff
+
+      - name: Generate a changelog
+        shell: bash
+        run:
+          git-cliff --config configs/cliff.toml --output CHANGES.md --tag ${{ env.RELEASE_VERSION }} --strip header -vv
 
       - name: Release
         uses: softprops/action-gh-release@v1
