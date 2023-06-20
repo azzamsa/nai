@@ -6,7 +6,7 @@ spec = {
     EOI
 }
 
-variable = { expr_open ~ variable_name ~ expr_close }
+variable = { expr_open ~ variable_name ~ style*  ~ expr_close }
 literal = { expr_open ~ "'" ~ word ~ "'" ~ style* ~ expr_close }
 
 style = { WHITESPACE* ~ "|" ~ WHITESPACE* ~ color }

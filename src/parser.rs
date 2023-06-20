@@ -41,7 +41,10 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
                                     }
                                     Rule::WHITESPACE => (),
                                     _ => {
-                                        tracing::debug!("unreachable `style` {:?}", &style);
+                                        tracing::debug!(
+                                            "unreachable literal's style: {:?}",
+                                            &style
+                                        );
                                         unreachable!();
                                     }
                                 }
@@ -57,14 +60,15 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
                 output.push_str(&output_);
             }
             Rule::variable => {
+                let mut output_ = String::new();
                 for variable in piece.into_inner() {
                     match variable.as_rule() {
                         Rule::variable_name => match variable.as_str() {
                             "start_date" => {
-                                output.push_str(&time.date()?.to_string());
+                                output_.push_str(&time.date()?.to_string());
                             }
                             "duration" => {
-                                output.push_str(&time.duration()?.to_string());
+                                output_.push_str(&time.duration()?.to_string());
                             }
                             _ => {
                                 return Err(crate::Error::InvalidBuiltInVariable {
@@ -72,6 +76,24 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
                                 })
                             }
                         },
+                        Rule::style => {
+                            for style in variable.into_inner() {
+                                match style.as_rule() {
+                                    Rule::color => {
+                                        output_ = format!("{}", output_.blue());
+                                    }
+                                    Rule::WHITESPACE => (),
+                                    _ => {
+                                        tracing::debug!(
+                                            "unreachable variable's style: {:?}",
+                                            &style
+                                        );
+                                        unreachable!();
+                                    }
+                                }
+                            }
+                        }
+
                         Rule::WHITESPACE => (),
                         _ => {
                             tracing::debug!("unreachable `variable` {:?}", &variable);
@@ -79,6 +101,7 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
                         }
                     }
                 }
+                output.push_str(&output_);
             }
             Rule::EOI => (),
             _ => {
@@ -158,8 +181,15 @@ mod tests {
         Ok(())
     }
     #[test]
-    fn style() -> Result<(), crate::Error> {
+    fn style_in_literal() -> Result<(), crate::Error> {
         let moment = test_case("{{ 'Faramir' | blue }} was born on {{ start_date }}");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
+    #[test]
+    fn style_in_variale() -> Result<(), crate::Error> {
+        let moment = test_case("{{ 'Faramir' | blue }} was born on {{ start_date | red }}");
         let result = parse(&moment);
         assert!(result.is_ok());
         Ok(())
