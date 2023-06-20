@@ -12,7 +12,7 @@ variable_name = { ASCII_ALPHA ~ ( ASCII_ALPHANUMERIC | "_" )* }
 literal = { "{{" ~  WHITESPACE* ~ "'" ~ word ~ "''" ~ WHITESPACE* ~ "}}" }
 
 word = { char+ }
-char = { ASCII_ALPHANUMERIC+ | custom_punctuation+ | "," | "." }
+char = { ASCII_ALPHANUMERIC+ | custom_punctuation+ | NEWLINE | "," | "." }
 
 custom_punctuation = { PUNCTUATION ~ !("{" | "}") }
 WHITESPACE = { " " }

@@ -112,4 +112,11 @@ mod tests {
         assert_eq!(result, expected);
         Ok(())
     }
+    #[test]
+    fn newline() -> Result<(), crate::Error> {
+        let moment = test_case("Faramir age.\nHe was born on {{ start_date }}.\nThanks god.");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
 }
