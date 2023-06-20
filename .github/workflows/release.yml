@@ -89,4 +89,4 @@ jobs:
           prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') }}
           generate_release_notes: true
           body_path: CHANGES.md
-          token: ${{ secrets.H_TOKEN }}
+          token: ${{ secrets.GH_TOKEN }}
