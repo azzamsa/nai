@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2023-06-20
+
+### Features
+
+- Support color in variable ([d6a65ab](d6a65ab57b57afac59ece67c3d96a99160a5b303))
+- Support color in literal string ([8c9c29a](8c9c29a1762783a40433513a7b7ff530e0232c09))
+- Support literal string ([641e794](641e794ac42d2d947772f6ac4b7b3b6b2fff1561))
+
 ## [0.4.0] - 2023-06-20
 
 ### Features
