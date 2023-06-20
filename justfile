@@ -14,7 +14,7 @@ setup:
 
 # Setup the development tools.
 _setup-dev:
-    cargo install --locked git-cliff cargo-watch dprint cargo-edit cargo-outdated spacer
+    cargo install --locked cargo-nextest git-cliff cargo-watch dprint cargo-edit cargo-outdated spacer
 
 # Develop the app.
 dev:
@@ -39,12 +39,12 @@ lint:
     cargo clippy
 
 _unit-test:
-    cargo test --lib
+    cargo nextest run --lib
 
 # Test the codebase.
 test: _unit-test
     cargo test --doc
-    cargo test
+    cargo nextest run
 
 # Tasks to make the code-base comply with the rules. Mostly used in git hooks.
 comply: fmt lint _lint_doc test
