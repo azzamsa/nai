@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.0] - 2023-06-21
+
+### Bug fixes
+
+- Don't hard code style ([57529e9](57529e919ea193943833ce09cadc52e40879f36a))
+
 ## [0.8.0] - 2023-06-21
 
 ### Features
