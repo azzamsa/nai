@@ -14,8 +14,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
 
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v3
+        with:
+          # it is a must!
+          fetch-depth: 0
 
       - name: Set the release version
         shell: bash
