@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.8.0] - 2023-06-21
+
+### Features
+
+- Accept any character in `format` ([1c0f27a](1c0f27a13cd8488b6520c9c3a0662964b5320af9))
+
 ## [0.7.0] - 2023-06-20
 
 ### Features
