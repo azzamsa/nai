@@ -88,7 +88,7 @@ fn parse_style(styles: Pairs<'_, Rule>, output: &mut String) {
                 *output = format!("{}", output.color(AnsiColors::from(style.as_str())));
             }
             Rule::effect => {
-                let style = Style::new().effect(Effect::Underline);
+                let style = Style::new().effect(effect_from_str(style.as_str()));
                 *output = format!("{}", output.style(style));
             }
             Rule::WHITESPACE => (),
@@ -97,6 +97,22 @@ fn parse_style(styles: Pairs<'_, Rule>, output: &mut String) {
                 unreachable!();
             }
         }
+    }
+}
+
+/// Get `Effect` from string
+fn effect_from_str(effect: &str) -> Effect {
+    match effect {
+        "bold" => Effect::Bold,
+        "dimmed" => Effect::Dimmed,
+        "italic" => Effect::Italic,
+        "underline" => Effect::Underline,
+        "blink" => Effect::Blink,
+        "blinkfast" => Effect::BlinkFast,
+        "reversed" => Effect::Reversed,
+        "hidden" => Effect::Hidden,
+        "strikethrough" => Effect::Strikethrough,
+        _ => unreachable!(),
     }
 }
 
@@ -190,6 +206,13 @@ mod tests {
     #[test]
     fn emoji() -> Result<(), crate::Error> {
         let moment = test_case("👶 {{ 'Faramir' | underline }} was born");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
+    #[test]
+    fn multiple_style() -> Result<(), crate::Error> {
+        let moment = test_case("👶 {{ 'Faramir' | magenta | bold }} was born");
         let result = parse(&moment);
         assert!(result.is_ok());
         Ok(())
