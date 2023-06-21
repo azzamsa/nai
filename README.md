@@ -43,7 +43,7 @@ I want to have a fast way to calculate my family age, how long I have been worki
 
 Create a file named `config.ron` in ~/.config/nai/. If you are on Windows, put it under \AppData\Nai\. Then add your configuration:
 
-```
+```rust
 Config(
     moments: [
         // My birthday
