@@ -8,10 +8,9 @@ spec = {
 expr = { expr_open ~ (variable | string) ~ style* ~ expr_close }
 
 // string contains raw input
-string             =  { "'" ~ content ~ "'" }
-content            =  { char+ }
-char               = _{ ASCII_ALPHANUMERIC+ | custom_punctuation+ | NEWLINE | "," | "." }
-custom_punctuation =  { PUNCTUATION ~ !("{" | "}" | "|") }
+string  = { "'" ~ content ~ "'" }
+content = { char+ }
+char    = { ANY ~ !("|") }
 
 // variable
 variable   =  { ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "_")* }

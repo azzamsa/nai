@@ -1,8 +1,29 @@
 Config(
     moments: [
+        // My birthday
         (
-            start_date: "1987-Dec-19",
-            format: "👶 {{ 'Faramir' | blue }} was born on {{ start_date | red }}. His age is {{ duration }}. {{ 'Bye' | underline }}!",
+            start_date: "1980-Oct-15",
+            format: "👶 {{ 'Aragorn II Elessar age (Me)' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n",
+        ),
+        // Arwen Undómiel's birthday
+        (
+            start_date: "1992-Mar-27",
+            format: "👶 {{ 'Arwen Undómiel age' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n",
+        ),
+        // ldarion Telcontar's birthday
+        (
+            start_date: "2018-Jun-10",
+            format: "👶 {{ 'ldarion Telcontar age' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n",
+        ),
+        // Marriage
+        (
+            start_date: "2015-Apr-08",
+            format: "💍 {{ 'Marriage' | cyan | bold }}\nYou got married on {{ start_date | red }}\nIt has been {{ duration }}\n",
+        ),
+        // Work
+        (
+            start_date: "2015-Apr-08",
+            format: "🛠 {{ 'Work' | cyan | bold }}\nYou began your career at {{ 'Rohan Equestrian Supplies' | underline }} on {{ start_date | red }}\nIt has been {{ duration }}",
         ),
     ],
 )
