@@ -59,11 +59,11 @@ doc:
 
 # Create a new release. Example `cargo-release release minor --tag-name v0.2.0`
 release level:
-    just up
     cargo-release release {{ level }} --execute
 
 # Make sure the repo is ready for release
 _release-check level:
+    just up
     cargo-release release {{ level }}
 
 # Release hooks
