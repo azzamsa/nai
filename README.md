@@ -23,6 +23,8 @@ Measure the duration of meaningful pursuits.
 
 <p><p/>
 
+![demo](https://github.com/azzamsa/nai/assets/17734314/7742a2f6-f2a9-4ef1-85bf-e4dceda0e638)
+
 </div>
 
 ---
