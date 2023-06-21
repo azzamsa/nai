@@ -35,6 +35,29 @@ Measure the duration of meaningful pursuits.
 - Fancy error message and colorful output.
 - Cross-platform and single binary.
 
+## Why?
+
+I want to have a fast way to calculate my family age, how long I have been working for a company, marriage, and other stuff.
+
+## Usage
+
+Create a file named `config.ron` in ~/.config/nai/. If you are on Windows, put it under \AppData\Nai\. Then add your configuration:
+
+```
+Config(
+    moments: [
+        // My birthday
+        (
+            start_date: "1980-Oct-15",
+            // Currently, only `start_date` and `duration` are available
+            format: "👶 {{ 'Aragorn II Elessar age (Me)' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n",
+        ),
+    ],
+)
+```
+
+To see more configuration, see the `example` directory.
+
 ## Installation
 
 ### From binaries
@@ -78,7 +101,7 @@ To learn more read [the development guide](docs/dev/README.md)
 
 ## Origin of the name
 
-Nai (나이) means age in Korean.
+Nai (나이) means "age" in Korean.
 
 ## Credits
 
