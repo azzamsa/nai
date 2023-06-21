@@ -27,7 +27,7 @@ jobs:
         uses: orhun/git-cliff-action@v2
         id: git-cliff
         with:
-          config: cliff.toml
+          config: configs/cliff.toml
           args: -vv --tag ${{ env.RELEASE_VERSION }} --strip header
         env:
           OUTPUT: CHANGES.md
