@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2023-06-21
+
+### Features
+
+- Accept anything in string ([1605d53](1605d53f8318d76548ff916198a32e438bd817a8))
+
 ## [0.9.0] - 2023-06-21
 
 ### Bug fixes
