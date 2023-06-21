@@ -30,7 +30,10 @@ jobs:
           config: configs/cliff.toml
           args: -vv --tag ${{ env.RELEASE_VERSION }} --strip header
         env:
-          OUTPUT: CHANGES.md
+          OUTPUT: CHANGELOG.md.tmp
+
+      - name: Print the changelog
+        run: cat "${{ steps.git-cliff.outputs.changelog }}"
 
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -38,7 +41,7 @@ jobs:
           name: "v${{ env.RELEASE_VERSION }}"
           prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') }}
           generate_release_notes: true
-          body_path: CHANGES.md
+          body_path: "${{ steps.git-cliff.outputs.changelog }}"
           token: ${{ secrets.GH_TOKEN }}
 
   publish:
