@@ -24,31 +24,50 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
 
     for piece in pair.into_inner() {
         match piece.as_rule() {
-            Rule::word | Rule::WHITESPACE => {
+            Rule::raw | Rule::WHITESPACE => {
                 output.push_str(piece.as_str());
             }
-            Rule::literal => {
+            Rule::expr => {
                 let mut output_ = String::new();
-                for literal in piece.into_inner() {
-                    match literal.as_rule() {
-                        Rule::word => {
-                            output_.push_str(literal.as_str());
-                        }
+                for expr in piece.into_inner() {
+                    match expr.as_rule() {
+                        Rule::variable => match expr.as_str() {
+                            "start_date" => {
+                                output_.push_str(&time.date()?.to_string());
+                            }
+                            "duration" => {
+                                output_.push_str(&time.duration()?.to_string());
+                            }
+                            _ => {
+                                return Err(crate::Error::InvalidBuiltInVariable {
+                                    variable: expr.as_str().to_string(),
+                                })
+                            }
+                        },
                         Rule::style => {
-                            parse_style(literal.into_inner(), &mut output_);
+                            parse_style(expr.into_inner(), &mut output_);
+                        }
+                        Rule::string => {
+                            for string in expr.into_inner() {
+                                match string.as_rule() {
+                                    Rule::content => {
+                                        output_.push_str(string.as_str());
+                                    }
+                                    Rule::WHITESPACE => (),
+                                    _ => {
+                                        tracing::debug!("unreachable `string` {:?}", &string);
+                                        unreachable!();
+                                    }
+                                }
+                            }
                         }
                         Rule::WHITESPACE => (),
                         _ => {
-                            tracing::debug!("unreachable `literal` {:?}", &literal);
+                            tracing::debug!("unreachable `expr` {:?}", &expr);
                             unreachable!();
                         }
                     }
                 }
-                output.push_str(&output_);
-            }
-            Rule::variable => {
-                let mut output_ = String::new();
-                parse_variables(piece.into_inner(), &mut output_, &time)?;
                 output.push_str(&output_);
             }
             Rule::EOI => (),
@@ -60,40 +79,6 @@ pub fn parse(moment: &Moment) -> Result<String, crate::Error> {
     }
     tracing::debug!("{:#?}", &output);
     Ok(output)
-}
-
-fn parse_variables(
-    variables: Pairs<'_, Rule>,
-    output: &mut String,
-    time: &Time,
-) -> Result<(), crate::Error> {
-    for variable in variables {
-        match variable.as_rule() {
-            Rule::variable_name => match variable.as_str() {
-                "start_date" => {
-                    output.push_str(&time.date()?.to_string());
-                }
-                "duration" => {
-                    output.push_str(&time.duration()?.to_string());
-                }
-                _ => {
-                    return Err(crate::Error::InvalidBuiltInVariable {
-                        variable: variable.as_str().to_string(),
-                    })
-                }
-            },
-            Rule::style => {
-                parse_style(variable.into_inner(), output);
-            }
-            Rule::WHITESPACE => (),
-            _ => {
-                tracing::debug!("unreachable `variable` {:?}", &variable);
-                unreachable!();
-            }
-        }
-    }
-
-    Ok(())
 }
 
 fn parse_style(styles: Pairs<'_, Rule>, output: &mut String) {
@@ -198,6 +183,20 @@ mod tests {
     #[test]
     fn effect_in_literal() -> Result<(), crate::Error> {
         let moment = test_case("{{ 'Faramir' | underline }} was born on {{ start_date }}");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
+    #[test]
+    fn emoji() -> Result<(), crate::Error> {
+        let moment = test_case("👶 {{ 'Faramir' | underline }} was born");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
+    #[test]
+    fn all() -> Result<(), crate::Error> {
+        let moment = test_case("👶 {{ 'Faramir' | blue }} was born on {{ start_date | red }}. His age is {{ duration }}. {{ 'Bye' | underline }}!");
         let result = parse(&moment);
         assert!(result.is_ok());
         Ok(())
