@@ -32,6 +32,7 @@ Measure the duration of meaningful pursuits.
 ## Features
 
 - Measure the duration of cherished moments.
+- Use any template in your imagination!.
 - Fancy error message and colorful output.
 - Cross-platform and single binary.
 

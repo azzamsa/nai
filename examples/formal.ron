@@ -1,24 +1,25 @@
+// Formal Template
 Config(
     moments: [
         // My birthday
         (
             start_date: "1980-Oct-15",
-            format: "👶 {{ 'Aragorn II Elessar age (Me)' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n",
+            format: "👶 {{ 'Aragorn II Elessar age (Me)' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n\n",
         ),
         // Arwen Undómiel's birthday
         (
             start_date: "1992-Mar-27",
-            format: "👶 {{ 'Arwen Undómiel age' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n",
+            format: "👶 {{ 'Arwen Undómiel age' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n\n",
         ),
         // ldarion Telcontar's birthday
         (
             start_date: "2018-Jun-10",
-            format: "👶 {{ 'ldarion Telcontar age' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n",
+            format: "👶 {{ 'ldarion Telcontar age' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n\n",
         ),
         // Marriage
         (
             start_date: "2015-Apr-08",
-            format: "💍 {{ 'Marriage' | cyan | bold }}\nYou got married on {{ start_date | red }}\nIt has been {{ duration }}\n",
+            format: "💍 {{ 'Marriage' | cyan | bold }}\nYou got married on {{ start_date | red }}\nIt has been {{ duration }}\n\n",
         ),
         // Work
         (
