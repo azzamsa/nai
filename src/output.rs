@@ -1,7 +1,7 @@
 use std::io::{self, Write};
 
 pub fn stdout(input: &str) {
-    writeln!(io::stdout(), "{}", input).ok();
+    write!(io::stdout(), "{}", input).ok();
 }
 
 pub fn stderr(input: &str) {
