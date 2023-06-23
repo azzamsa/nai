@@ -11,7 +11,7 @@ Config(
         ),
         (
             start_date: "2023-Jan-23",
-            format: "On {{ start_date | red }}, I embarked on a new chapter in my life by marrying my beloved, Arwen Undómiel. Our love continues to grow stronger every day.\n\nI cherish our friendship and the adventures we have had together. Let's plan a reunion soon and create more memories.\n\nWishing you all the best,\n{{ 'Aragorn II Elessar' | cyan | bold }}",
+            format: "On {{ start_date | red }}, I embarked on a new chapter in my life by marrying my beloved, Arwen Undómiel. Our love continues to grow stronger every day.\n\nI cherish our friendship and the adventures we have had together. Let's plan a reunion soon and create more memories.\n\nWishing you all the best,\n{{ 'Aragorn II Elessar' | cyan | bold }}\n",
         ),
     ],
 )

@@ -11,7 +11,7 @@ Config(
         ),
         (
             start_date: "2010-Feb-20",
-            format: "Furthermore, love has been a guiding force in my life. On {{ start_date | red }}, I exchanged vows with my beloved, Arwen Undómiel. Together, we continue to build a life filled with love, support, and shared dreams.\n\nAs I write these words, I am filled with gratitude for the adventures and lessons life has bestowed upon me. Each step has led me closer to self-discovery and personal growth.\n\nUntil the next entry,\n{{ 'Aragorn II Elessar' | cyan | bold }}",
+            format: "Furthermore, love has been a guiding force in my life. On {{ start_date | red }}, I exchanged vows with my beloved, Arwen Undómiel. Together, we continue to build a life filled with love, support, and shared dreams.\n\nAs I write these words, I am filled with gratitude for the adventures and lessons life has bestowed upon me. Each step has led me closer to self-discovery and personal growth.\n\nUntil the next entry,\n{{ 'Aragorn II Elessar' | cyan | bold }}\n",
         ),
     ],
 )

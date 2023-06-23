@@ -24,7 +24,7 @@ Config(
         // Work
         (
             start_date: "2015-Apr-08",
-            format: "🛠  {{ 'Work' | cyan | bold }}\nYou began your career at {{ 'Rohan Equestrian Supplies' | underline }} on {{ start_date | red }}\nIt has been {{ duration }}",
+            format: "🛠  {{ 'Work' | cyan | bold }}\nYou began your career at {{ 'Rohan Equestrian Supplies' | underline }} on {{ start_date | red }}\nIt has been {{ duration }}\n",
         ),
     ],
 )
