@@ -19,7 +19,7 @@ expr_close = _{ WHITESPACE* ~ "}}" }
 
 // style
 style  = { WHITESPACE* ~ "|" ~ WHITESPACE* ~ (color | effect) }
-color  = { "black" | "red" | "green" | "yellow" | "blue" | "magenta" | "cyan" | "white" | "default" | "brightblack" | "brightred" | "brightgreen" | "brightyellow" | "brightblue" | "brightmagenta" | "brightcyan" | "brightwhite" }
+color  = { "black" | "red" | "green" | "yellow" | "blue" | "magenta" | "cyan" | "white" | "default" | "brightBlack" | "brightRed" | "brightGreen" | "brightYellow" | "brightBlue" | "brightMagenta" | "brightCyan" | "brightWhite" }
 effect = { "bold" | "dimmed" | "italic" | "underline" | "blink" | "blinkfast" | "reversed" | "hidden" | "strikethrough" }
 
 // global

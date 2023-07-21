@@ -85,7 +85,7 @@ fn parse_style(styles: Pairs<'_, Rule>, output: &mut String) {
     for style in styles {
         match style.as_rule() {
             Rule::color => {
-                *output = format!("{}", output.color(AnsiColors::from(style.as_str())));
+                *output = format!("{}", output.color(color_from_str(style.as_str())));
             }
             Rule::effect => {
                 let style = Style::new().effect(effect_from_str(style.as_str()));
@@ -97,6 +97,30 @@ fn parse_style(styles: Pairs<'_, Rule>, output: &mut String) {
                 unreachable!();
             }
         }
+    }
+}
+
+/// Get `Color` from string
+fn color_from_str(color: &str) -> AnsiColors {
+    match color {
+        "black" => AnsiColors::Black,
+        "red" => AnsiColors::Red,
+        "green" => AnsiColors::Green,
+        "yellow" => AnsiColors::Yellow,
+        "blue" => AnsiColors::Blue,
+        "magenta" => AnsiColors::Magenta,
+        "purple" => AnsiColors::Magenta,
+        "cyan" => AnsiColors::Cyan,
+        "white" => AnsiColors::White,
+        "brightBlack" => AnsiColors::BrightBlack,
+        "brightRed" => AnsiColors::BrightRed,
+        "brightGreen" => AnsiColors::BrightGreen,
+        "brightYellow" => AnsiColors::BrightYellow,
+        "brightBlue" => AnsiColors::BrightBlue,
+        "brightMagenta" => AnsiColors::BrightMagenta,
+        "brightCyan" => AnsiColors::BrightCyan,
+        "brightWhite" => AnsiColors::BrightWhite,
+        _ => AnsiColors::White,
     }
 }
 
@@ -213,6 +237,13 @@ mod tests {
     #[test]
     fn multiple_style() -> Result<(), crate::Error> {
         let moment = test_case("👶 {{ 'Faramir' | magenta | bold }} was born");
+        let result = parse(&moment);
+        assert!(result.is_ok());
+        Ok(())
+    }
+    #[test]
+    fn bright_color() -> Result<(), crate::Error> {
+        let moment = test_case("👶 {{ 'Faramir' | brightMagenta | bold }} was born");
         let result = parse(&moment);
         assert!(result.is_ok());
         Ok(())

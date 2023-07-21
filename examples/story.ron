@@ -4,7 +4,7 @@ Config(
         // brithday
         (
             start_date: "1980-Oct-15",
-            format: "{{ 'My Story' | cyan | bold }}\n\nOnce upon a time. In the kingdom of {{ 'Gondor' | underline }}. {{ 'Aragorn II Elessar' | cyan | bold }} the brave warrior, was born on {{ start_date | red }}.\n",
+            format: "{{ 'My Story' | brightMagenta | bold }}\n\nOnce upon a time. In the kingdom of {{ 'Gondor' | underline }}. {{ 'Aragorn II Elessar' | cyan | bold }} the brave warrior, was born on {{ start_date | red }}.\n",
         ),
         // work
         (
