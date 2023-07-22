@@ -68,8 +68,7 @@ _release-prepare version:
 up arg="":
     #!/usr/bin/env bash
     if [ "{{ arg }}" = "--write" ]; then
-        cargo upgrade
-        cargo update
+        cargo upgrade && cargo update
     else
         cargo outdated --root-deps-only
     fi;
