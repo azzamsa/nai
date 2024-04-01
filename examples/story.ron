@@ -1,7 +1,7 @@
 // Story Template
 Config(
     moments: [
-        // brithday
+        // birthday
         (
             start_date: "1980-Oct-15",
             format: "{{ 'My Story' | brightMagenta | bold }}\n\nOnce upon a time. In the kingdom of {{ 'Gondor' | underline }}. {{ 'Aragorn II Elessar' | cyan | bold }} the brave warrior, was born on {{ start_date | red }}.\n",
