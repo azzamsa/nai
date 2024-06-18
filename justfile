@@ -34,7 +34,7 @@ fmt-check:
 
 # Lint the codebase.
 lint:
-    cargo clippy
+    cargo clippy --all-targets --all-features
     typos --config configs/typos.toml
 
 # Test the codebase.
