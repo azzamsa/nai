@@ -8,6 +8,7 @@ exclude = ["/README.md"]
 keywords = ["cli", "time", "duration"]
 license = "MIT"
 repository = "https://github.com/azzamsa/nai"
+rust-version = "1.78.0"
 description = "Measure the duration of meaningful pursuits"
 
 [profile.release]
