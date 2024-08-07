@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2024-08-07
+
+### Features
+
+- Port chrono to jiff ([567a0b0](https://github.com/azzamsa/nai/commit/567a0b005183c1fdc000b8555a488aae87925170))
+  - **BREAKING!** ⚠️ : port chrono to jiff
+
 ## [1.1.1] - 2023-07-22
 
 ### Bug fixes
