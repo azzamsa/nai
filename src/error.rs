@@ -54,14 +54,8 @@ impl std::convert::From<std::env::VarError> for Error {
     }
 }
 
-impl std::convert::From<chrono::ParseError> for Error {
-    fn from(err: chrono::ParseError) -> Self {
-        Error::Internal(err.to_string())
-    }
-}
-
-impl std::convert::From<chrono::OutOfRangeError> for Error {
-    fn from(err: chrono::OutOfRangeError) -> Self {
+impl std::convert::From<jiff::Error> for Error {
+    fn from(err: jiff::Error) -> Self {
         Error::Internal(err.to_string())
     }
 }

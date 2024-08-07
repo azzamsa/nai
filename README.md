@@ -49,8 +49,8 @@ Config(
     moments: [
         // My birthday
         (
-            start_date: "1980-Oct-15",
-            // Currently, only `start_date` and `duration` are available
+            start_date: "1980-10-30",
+           // Currently, only `start_date` and `duration` are available
             format: "👶 {{ 'Aragorn II Elessar age (Me)' | cyan | bold }}\nBorn at: {{ start_date | red }}\nAge: {{ duration }}\n",
         ),
     ],

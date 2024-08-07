@@ -3,17 +3,17 @@ Config(
     moments: [
         // birthday
         (
-            start_date: "1980-Oct-15",
+            start_date: "1980-10-15",
             format: "{{ 'My Story' | brightMagenta | bold }}\n\nOnce upon a time. In the kingdom of {{ 'Gondor' | underline }}. {{ 'Aragorn II Elessar' | cyan | bold }} the brave warrior, was born on {{ start_date | red }}.\n",
         ),
         // work
         (
-            start_date: "2015-Apr-08",
+            start_date: "2015-04-08",
             format: "Years passed, and on {{ start_date | green }} our hero began his career at {{ 'Rohan Equestrian Supplies' | underline }}.\n"
         ),
         // marriage
         (
-            start_date: "2018-Jan-01",
+            start_date: "2018-01-01",
             format: "Love was in the air, and on {{ start_date | blue }} Aragorn II Elessar and Arwen Undómiel tied the knot.\nTheir love story continues. Onward to new adventures!\n",
         ),
     ],

@@ -1,7 +1,7 @@
-use chrono::{Local, NaiveDate};
+use jiff::civil;
 
 pub struct Time {
-    date: NaiveDate,
+    date: civil::Date,
 }
 
 impl Time {
@@ -17,32 +17,26 @@ impl Time {
 
     /// Calculate elapsed time
     pub fn duration(&self) -> Result<humantime::FormattedDuration, crate::Error> {
-        let today = today()?;
-        let duration = today.signed_duration_since(self.date);
+        let today = jiff::Zoned::now().date();
+        let duration = today.since(self.date)?;
         Self::format_duration(duration)
     }
 
-    /// Parse string time into `NaiveDate` struct
-    fn parse(date: &str) -> Result<NaiveDate, crate::Error> {
-        let format = "%Y-%b-%d";
-        Ok(NaiveDate::parse_from_str(date, format)?)
+    /// Parse string time into `plain Date`
+    fn parse(date: &str) -> Result<civil::Date, crate::Error> {
+        let date: civil::Date = date.parse()?;
+        Ok(date)
     }
 
     /// Turn duration into human readable format
-    fn format_duration(
-        duration: chrono::Duration,
-    ) -> Result<humantime::FormattedDuration, crate::Error> {
-        Ok(humantime::format_duration(duration.to_std()?))
+    fn format_duration(duration: jiff::Span) -> Result<humantime::FormattedDuration, crate::Error> {
+        let duration = humantime::parse_duration(&format!("{}hours", duration.get_hours()))?;
+        let duration = humantime::format_duration(duration);
+        Ok(duration)
     }
 
     /// Formats the given date into a custom string format.
-    fn format_date(date: NaiveDate) -> Result<String, crate::Error> {
-        let format = "%a, %d %b %Y";
-        Ok(date.format(format).to_string())
+    fn format_date(date: civil::Date) -> Result<String, crate::Error> {
+        Ok(date.strftime("%a, %d %b %Y").to_string())
     }
-}
-
-/// Today's date
-fn today() -> Result<NaiveDate, crate::Error> {
-    Ok(Local::now().date_naive())
 }

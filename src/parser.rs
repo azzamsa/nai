@@ -146,7 +146,7 @@ mod tests {
 
     fn test_case(format: &str) -> Moment {
         Moment {
-            start_date: "1987-Dec-19".to_string(),
+            start_date: "1987-12-19".to_string(),
             format: format.to_string(),
         }
     }
